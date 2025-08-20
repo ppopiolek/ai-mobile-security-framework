@@ -1,0 +1,17 @@
+{
+  "models": [
+    {
+      "name": "NWDAF — LSTM Autoencoder for Traffic Anomaly Detection",
+      "integration": "5GC / NWDAF (microservices); data from Control Plane; output local to analytics",
+      "use_case": "Detect unusual UE traffic patterns to flag potential misuse/hijacking",
+      "role": "Anomaly detection supporting security monitoring in NWDAF",
+      "nfs_sources": "SMF → NWDAF DB (uplink/downlink/total volume)",
+      "nfs_consumers": "Prototype only; not wired to downstream NFs (PoC)",
+      "data_input": "Time‑series: timestamp, pduseid, value_ul, value_dl, value_total",
+      "data_output": "Anomaly score per timestamp / window",
+      "validation": "Correct anomaly classification; minimize false negatives",
+      "environment": "Python (DL), OAI 5G Core + NWDAF (microservices)",
+      "links": "Paper / code as applicable"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-Native Mobile Networks — Security & Threat Modeling</title>
+  <meta name="description" content="Summary site for Model Cards, Threat Modeling, and a Security Framework for AI-native next-generation mobile networks (5G/6G).">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container hero">
+    <h1>AI‑Native Mobile Networks</h1>
+    <p class="subtitle">Model Cards · Threat Modeling · Security Framework (5G/6G)</p>
+    <nav class="nav">
+      <a href="#overview">Overview</a>
+      <a href="#model-cards">Model Cards</a>
+      <a href="#threat-modeling">Threat Modeling</a>
+      <a href="#security-framework">Security Framework</a>
+      <a href="#case-study">Case Study</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>
+        This site summarizes the article <em>“Threat Modeling and a Systematic Security Framework for AI‑Native Next‑Generation Mobile Networks”</em>.
+        It provides a concise view on network‑oriented Model Cards, an AI‑specific threat modeling approach,
+        and a five‑stage security framework for AI components embedded in 5G/6G systems.
+      </p>
+    </section>
+
+    <section id="model-cards" class="card">
+      <h2>Model Cards (Network‑Oriented)</h2>
+      <p>
+        Model Cards document an AI/ML model <strong>together with its network context</strong>:
+        placement (e.g., NWDAF, MDAF, RIC), data sources/clients (NFs), inputs/outputs, validation, and environment.
+      </p>
+      <div id="models" class="grid"></div>
+      <details class="tip">
+        <summary>How to add/edit Model Cards</summary>
+        <p>Update <code>models.json</code> in this repository. The site will render cards automatically.</p>
+      </details>
+    </section>
+
+    <section id="threat-modeling" class="card">
+      <h2>Threat Modeling (AI‑Specific)</h2>
+      <p>
+        The approach characterizes the attacker by <strong>knowledge</strong> (model, data, environment),
+        <strong>capabilities</strong>, and <strong>goals</strong>, and standardizes TTPs using matrices (e.g., MITRE FiGHT / ATT&CK, OWASP ML).
+        Risk is prioritized via three views:
+      </p>
+      <ul>
+        <li><strong>Probability Matrix</strong> — attacker’s cost vs. benefit.</li>
+        <li><strong>Risk Matrix</strong> — likelihood vs. consequences (defender view).</li>
+        <li><strong>Priority Matrix</strong> — risk vs. defense cost.</li>
+      </ul>
+      <p>
+        This yields <em>practical</em> and <em>context‑aware</em> scenarios aligned with mobile network realities.
+      </p>
+    </section>
+
+    <section id="security-framework" class="card">
+      <h2>Security Framework (Five Stages)</h2>
+      <ol>
+        <li><strong>Input</strong> — accept model + Model Card with integration details (NFs, data flow).</li>
+        <li><strong>Key Threats Identification</strong> — system context, threat intel, attacker modeling, risk analysis.</li>
+        <li><strong>Evaluation Environment Setup</strong> — configure representative scenarios (e.g., in an NDT/testbed).</li>
+        <li><strong>Security Testing</strong> — assess robustness under standard and adversarial conditions.</li>
+        <li><strong>Continuous Monitoring</strong> — production policies, drift checks, feedback loop to testing.</li>
+      </ol>
+    </section>
+
+    <section id="case-study" class="card">
+      <h2>Case Study (Example)</h2>
+      <p>
+        Example: LSTM Autoencoder anomaly detection in NWDAF using realistic traffic data.
+        Coordinated traffic manipulation can degrade detection integrity with limited signals in anomaly scores,
+        underscoring the need for NDT‑based testing, XAI‑aided validation, and continuous monitoring.
+      </p>
+      <details class="tip">
+        <summary>Where to put your case study</summary>
+        <p>Add plots or artefacts in the <code>case-study</code> folder and link them here (e.g., images or CSV files).</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© 2025 — AI‑Native Mobile Networks Security Summary. Built as a simple static site for GitHub Pages.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
