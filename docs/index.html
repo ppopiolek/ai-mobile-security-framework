@@ -1,57 +1,1003 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI-Mobile Security Framework</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-Native Mobile Networks — Model Cards & Security Framework</title>
+  <meta name="description" content="Network-oriented Model Cards framework for AI/ML models in 5G/6G mobile networks.">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { 
+      margin: 0; 
+      padding: 0; 
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, "Apple Color Emoji", "Segoe UI Emoji"; 
+    
+    .form-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+    
+    .form-section h3 {
+      margin-top: 0;
+      color: #1e40af;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #3b82f6;
+      padding-bottom: 0.5rem;
+    }
+    
+    .form-group {
+      margin: 1rem 0;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #374151;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .export-section {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: 16px;
+      border: 1px solid #bfdbfe;
+    }
+    
+    .export-section h3 {
+      margin-top: 0;
+      color: #1e40af;
+      text-align: center;
+    }
+    
+    .export-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .export-btn {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .json-btn {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+    
+    .yaml-btn {
+      background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+      color: #065f46;
+      border: 1px solid #10b981;
+    }
+    
+    .md-btn {
+      background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+      color: #5b21b6;
+      border: 1px solid #8b5cf6;
+    }
+    
+    .pdf-btn {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      color: #991b1b;
+      border: 1px solid #ef4444;
+    }
+    
+    .export-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .export-btn:active {
+      transform: translateY(0);
+    }
+    body { 
+      color: #111827; 
+      background: #f9fafb; 
+      line-height: 1.6; 
+    }
+    
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 1rem; 
+    }
+    
+    .hero { 
+      padding: 3rem 1rem 2rem; 
+      text-align: center; 
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%); 
+      color: #fff; 
+      border-radius: 0 0 2rem 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .hero h1 { 
+      margin: 0 0 .5rem; 
+      font-size: clamp(1.8rem, 4vw, 3rem); 
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+    
+    .subtitle { 
+      margin: 0 0 1.5rem; 
+      opacity: .9; 
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+    
+    .nav { 
+      margin-top: 1.5rem; 
+      display: flex; 
+      gap: 1rem; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+    }
+    
+    .nav a { 
+      color: #e2e8f0; 
+      text-decoration: none; 
+      padding: .6rem 1.2rem; 
+      border: 1px solid rgba(226,232,240,.3); 
+      border-radius: 50px; 
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .nav a:hover { 
+      background: rgba(226,232,240,.15); 
+      border-color: rgba(226,232,240,.5);
+      transform: translateY(-2px);
+    }
+    
+    .card { 
+      background: #fff; 
+      border: 1px solid #e5e7eb; 
+      border-radius: 1.5rem; 
+      padding: 2rem; 
+      margin: 2rem 0; 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+    
+    .card h2 { 
+      margin-top: 0; 
+      color: #1e293b;
+      font-size: 1.8rem;
+      font-weight: 600;
+      border-bottom: 3px solid #3b82f6;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .model-card-framework {
+      margin-top: 2rem;
+    }
+    
+    .framework-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .framework-table th {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid #1e40af;
+    }
+    
+    .framework-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+    
+    .framework-table tr:hover {
+      background-color: #f8fafc;
+    }
+    
+    .section-header {
+      background: #f1f5f9;
+      font-weight: 600;
+      color: #334155;
+    }
+    
+    .aspect-cell {
+      font-weight: 500;
+      color: #475569;
+      width: 20%;
+    }
+    
+    .description-cell {
+      color: #374151;
+      line-height: 1.6;
+    }
+    
+    .highlight {
+      background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    
+    .integration-info {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .integration-info h3 {
+      margin-top: 0;
+      color: #1e40af;
+      font-size: 1.2rem;
+    }
+    
+    .tip { 
+      border: 2px dashed #94a3b8; 
+      border-radius: 12px; 
+      padding: 1rem 1.5rem; 
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
+      margin-top: 1.5rem; 
+    }
+    
+    .tip summary {
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer { 
+      text-align: center; 
+      color: #6b7280; 
+      font-size: .9rem; 
+      padding: 3rem 1rem 2rem; 
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 3rem;
+    }
+    
+    .coming-soon {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      border: 1px solid #f87171;
+      color: #991b1b;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      body { color: #e5e7eb; background: #0b0f17; }
+      .card { background: #1e293b; border-color: #374151; }
+      .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+      .nav a { color: #cbd5e1; border-color: #475569; }
+      .tip { background: linear-gradient(135deg, #1e293b, #334155); border-color: #475569; }
+      .footer { color: #9ca3af; background: #0b0f17; border-color: #374151; }
+      .framework-table th { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+      .framework-table td { border-color: #374151; }
+      .framework-table tr:hover { background-color: #1e293b; }
+      .section-header { background: #334155; color: #cbd5e1; }
+      .integration-info { background: #1e3a8a; border-color: #3b82f6; }
+      .coming-soon { background: linear-gradient(135deg, #7f1d1d, #991b1b); border-color: #dc2626; color: #fca5a5; }
+      .form-section { background: #1e293b; border-color: #475569; }
+      .form-section h3 { color: #60a5fa; border-color: #3b82f6; }
+      .form-group label { color: #cbd5e1; }
+      .form-group input, .form-group textarea, .form-group select { 
+        background: #0f172a; 
+        border-color: #475569; 
+        color: #e5e7eb; 
+      }
+      .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+      }
+      .export-section { background: linear-gradient(135deg, #1e3a8a, #1e40af); border-color: #3b82f6; }
+      .export-section h3 { color: #dbeafe; }
+    }
+    
+    @media (max-width: 768px) {
+      .framework-table th,
+      .framework-table td {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+      
+      .nav {
+        gap: 0.5rem;
+      }
+      
+      .nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>AI-Mobile Security Framework</h1>
-    <p>
-      Companion site for the article:<br>
-      <em>“Threat Modeling and a Systematic Security Framework for AI-Native Next-Generation Mobile Networks”</em>
-    </p>
+  <header class="container hero">
+    <h1>AI‑Native Mobile Networks</h1>
+    <p class="subtitle">Network-Oriented Model Cards Framework for 5G/6G AI/ML Systems</p>
+    <nav class="nav">
+      <a href="#overview">Overview</a>
+      <a href="#model-cards">Model Cards</a>
+      <a href="#framework">Framework</a>
+      <a href="#create-card">Create Card</a>
+    </nav>
   </header>
 
-  <main>
-    <section>
-      <h2>About</h2>
+  <main class="container">
+    <section id="overview" class="card">
+      <h2>Overview</h2>
       <p>
-        This project explores threat modeling and a systematic security framework 
-        for AI-native 5G/6G mobile networks. The site will gradually provide 
-        materials, visualizations, and supporting resources.
+        This site presents a comprehensive framework for documenting and securing AI/ML models in next-generation mobile networks (5G/6G). 
+        The focus is on <span class="highlight">network-oriented Model Cards</span> that capture both technical model details and their operational context within mobile network infrastructure.
       </p>
+      
+      <div class="integration-info">
+        <h3>Why Network-Oriented Model Cards?</h3>
+        <p>Traditional Model Cards focus primarily on the model itself. In mobile networks, AI/ML models have significant impact on network operations, making it essential to document not just the model, but also its integration context, data sources, and operational dependencies.</p>
+      </div>
     </section>
 
-    <section>
-      <h2>Framework (Preview)</h2>
+    <section id="model-cards" class="card">
+      <h2>Network-Oriented Model Cards Framework</h2>
       <p>
-        The framework introduces a structured way to assess risks 
-        and strengthen security of AI-driven mobile network components. 
-        More details will be added soon.
+        Model Cards document an AI/ML model <strong>together with its network context</strong>: 
+        placement (e.g., NWDAF, MDAF, RIC), data sources and clients (NFs), inputs/outputs, validation methods, and operational environment.
       </p>
+      
+      <div class="model-card-framework">
+        <table class="framework-table">
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th>Aspect</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3" class="section-header"><strong>Use Cases</strong></td>
+              <td class="aspect-cell">Network Function Description</td>
+              <td class="description-cell">What is the aim of a given NF (e.g., traffic management, UPF placement, reaction to threats)</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Role of AI/ML Model</td>
+              <td class="description-cell">How given AI/ML model is used in the context of a given NF (e.g., traffic optimization, overload prediction, threat detection)</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">5G Infrastructure Integration</td>
+              <td class="description-cell">
+                <strong>Domain placement:</strong> In which domain does a given NF operate and what is its role (e.g., management – MDAF, 5GC – NWDAF, RAN – RIC)<br>
+                <strong>NF cooperation:</strong> How does this NF cooperate with other NFs (e.g., MDAF with MEC, NWDAF with AMF)<br>
+                <strong>Data producers:</strong> Which other NFs produce data for this NF (e.g., SMF produces data for NWDAF)<br>
+                <strong>Data consumers:</strong> Which other NFs use this NF's output (e.g., SMF utilizes NWDAF analytics)
+              </td>
+            </tr>
+            
+            <tr>
+              <td rowspan="4" class="section-header"><strong>AI/ML Model Details</strong></td>
+              <td class="aspect-cell">Model Overview</td>
+              <td class="description-cell">High-level AI/ML description: architecture, type, aim (e.g., prediction), implementation source (if applicable), name</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Architecture Details</td>
+              <td class="description-cell">For example, for ML models, it can be parametrization, whereas for neural networks, it can be a description of layers, etc.</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Special Functions</td>
+              <td class="description-cell">Unique model features (e.g., specific technical context such as changes in implementation of given NF)</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Base Model</td>
+              <td class="description-cell">If applicable: what was the base model (e.g., when transfer learning was used)</td>
+            </tr>
+            
+            <tr>
+              <td rowspan="5" class="section-header"><strong>Data Format</strong></td>
+              <td class="aspect-cell">Input</td>
+              <td class="description-cell">What is the input for a given model data types (e.g., tabular data, mixed data with continuous and discrete values)</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Output</td>
+              <td class="description-cell">What is the output data (data types)</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Data Source</td>
+              <td class="description-cell">Link to the source of data if applicable</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Data Sample</td>
+              <td class="description-cell">A small subset of the dataset used when the data source is unavailable</td>
+            </tr>
+            <tr>
+              <td class="aspect-cell">Preprocessing</td>
+              <td class="description-cell">A short description of data preprocessing</td>
+            </tr>
+            
+            <tr>
+              <td class="section-header"><strong>Validation</strong></td>
+              <td class="aspect-cell">Validation Methods</td>
+              <td class="description-cell">How to assess the objective function for a given model; what is the desired output/behavior/influence, and what is not</td>
+            </tr>
+            
+            <tr>
+              <td class="section-header"><strong>Environment</strong></td>
+              <td class="aspect-cell">Environment Configuration</td>
+              <td class="description-cell">What was the technology stack used for model training/testing</td>
+            </tr>
+            
+            <tr>
+              <td class="section-header"><strong>Additional Information</strong></td>
+              <td class="aspect-cell">Sources & Publications</td>
+              <td class="description-cell">Link to other sources and publications (if applicable)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <details class="tip">
+        <summary>How to Create Model Cards</summary>
+        <p>Model Cards should be created by the original developers of the AI/ML system to ensure accuracy and completeness. The framework provides a standardized template that can be adapted to specific use cases in mobile networks.</p>
+      </details>
     </section>
 
-    <section>
-      <h2>Model Cards</h2>
+    <section id="framework" class="card">
+      <h2>Security Framework Overview</h2>
       <p>
-        Model cards describing AI/ML components in mobile networks 
-        will appear here in the next updates.
+        Our research proposes a comprehensive security framework for AI/ML systems in mobile networks. The framework emphasizes the <span class="highlight">operational context</span> and <span class="highlight">network integration</span> of AI models, moving beyond isolated model analysis.
       </p>
+      
+      <div class="coming-soon">
+        🔒 Detailed security framework documentation will be available after publication
+      </div>
+      
+      <div class="integration-info">
+        <h3>Key Framework Principles</h3>
+        <ul>
+          <li><strong>Context-Aware Analysis:</strong> Consider models within their operational mobile network environment</li>
+          <li><strong>Systematic Threat Modeling:</strong> Use standardized frameworks for consistent threat assessment</li>
+          <li><strong>Risk-Based Approach:</strong> Prioritize threats based on realistic attack scenarios and business impact</li>
+          <li><strong>Continuous Monitoring:</strong> Implement ongoing security assessment throughout the model lifecycle</li>
+        </ul>
+      </div>
     </section>
 
-    <section>
-      <h2>Status</h2>
+    <section id="create-card" class="card">
+      <h2>Create Your Model Card</h2>
       <p>
-        This is an early version of the site — more sections and 
-        detailed content will follow.
+        Use our interactive form to create a network-oriented Model Card for your AI/ML model. Fill in the details and export in multiple formats for documentation and sharing.
       </p>
+      
+      <div class="model-card-form">
+        <form id="modelCardForm">
+          <!-- Use Cases Section -->
+          <div class="form-section">
+            <h3>Use Cases</h3>
+            <div class="form-group">
+              <label for="nf-description">Network Function Description</label>
+              <textarea id="nf-description" placeholder="What is the aim of your NF (e.g., traffic management, UPF placement, reaction to threats)"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="ai-role">Role of AI/ML Model</label>
+              <textarea id="ai-role" placeholder="How is the AI/ML model used in the context of the NF (e.g., traffic optimization, overload prediction, threat detection)"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="domain-placement">Domain Placement</label>
+              <select id="domain-placement">
+                <option value="">Select domain...</option>
+                <option value="5GC-NWDAF">5G Core - NWDAF</option>
+                <option value="Management-MDAF">Management - MDAF</option>
+                <option value="RAN-RIC">RAN - RIC (Near-RT/Non-RT)</option>
+                <option value="Edge-MEC">Edge - MEC</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nf-cooperation">NF Cooperation</label>
+              <textarea id="nf-cooperation" placeholder="How does this NF cooperate with other NFs?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="data-producers">Data Producers</label>
+              <textarea id="data-producers" placeholder="Which NFs produce data for this NF?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="data-consumers">Data Consumers</label>
+              <textarea id="data-consumers" placeholder="Which NFs use this NF's output?"></textarea>
+            </div>
+          </div>
+
+          <!-- AI/ML Model Details Section -->
+          <div class="form-section">
+            <h3>AI/ML Model Details</h3>
+            <div class="form-group">
+              <label for="model-name">Model Name</label>
+              <input type="text" id="model-name" placeholder="Name of your model">
+            </div>
+            <div class="form-group">
+              <label for="model-overview">Model Overview</label>
+              <textarea id="model-overview" placeholder="High-level description: architecture, type, aim"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="architecture-details">Architecture Details</label>
+              <textarea id="architecture-details" placeholder="Detailed architecture description (layers, parameters, etc.)"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="special-functions">Special Functions</label>
+              <textarea id="special-functions" placeholder="Unique model features or special requirements"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="base-model">Base Model</label>
+              <input type="text" id="base-model" placeholder="Base model if transfer learning was used">
+            </div>
+          </div>
+
+          <!-- Data Format Section -->
+          <div class="form-section">
+            <h3>Data Format</h3>
+            <div class="form-group">
+              <label for="input-format">Input Format</label>
+              <textarea id="input-format" placeholder="Describe input data types and format"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="output-format">Output Format</label>
+              <textarea id="output-format" placeholder="Describe output data types and format"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="data-source">Data Source</label>
+              <input type="text" id="data-source" placeholder="Link or reference to data source">
+            </div>
+            <div class="form-group">
+              <label for="preprocessing">Preprocessing</label>
+              <textarea id="preprocessing" placeholder="Description of data preprocessing steps"></textarea>
+            </div>
+          </div>
+
+          <!-- Validation Section -->
+          <div class="form-section">
+            <h3>Validation</h3>
+            <div class="form-group">
+              <label for="validation-methods">Validation Methods</label>
+              <textarea id="validation-methods" placeholder="How to assess the model performance and desired outputs"></textarea>
+            </div>
+          </div>
+
+          <!-- Environment Section -->
+          <div class="form-section">
+            <h3>Environment</h3>
+            <div class="form-group">
+              <label for="environment-config">Environment Configuration</label>
+              <textarea id="environment-config" placeholder="Technology stack used for training/testing"></textarea>
+            </div>
+          </div>
+
+          <!-- Additional Information Section -->
+          <div class="form-section">
+            <h3>Additional Information</h3>
+            <div class="form-group">
+              <label for="sources">Sources & Publications</label>
+              <textarea id="sources" placeholder="Links to publications, repositories, or other sources"></textarea>
+            </div>
+          </div>
+        </form>
+
+        <div class="export-section">
+          <h3>Export Model Card</h3>
+          <div class="export-buttons">
+            <button id="exportJson" class="export-btn json-btn">
+              📄 Export as JSON
+            </button>
+            <button id="exportYaml" class="export-btn yaml-btn">
+              📝 Export as YAML
+            </button>
+            <button id="exportMarkdown" class="export-btn md-btn">
+              📋 Export as Markdown
+            </button>
+            <button id="exportPdf" class="export-btn pdf-btn">
+              📑 Export as PDF
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 AI-Mobile Security Framework</p>
+  <footer class="container footer">
+    <p>© 2025 — AI‑Native Mobile Networks Security Framework. Research by Warsaw University of Technology.</p>
+    <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">Built as a companion site for ongoing research on AI/ML security in mobile networks.</p>
   </footer>
+
+  <script>
+    // Form data collection
+    function collectFormData() {
+      const formData = {
+        metadata: {
+          created: new Date().toISOString(),
+          version: "1.0",
+          framework: "Network-Oriented Model Cards for 5G/6G"
+        },
+        useCases: {
+          networkFunctionDescription: document.getElementById('nf-description').value,
+          aimlRole: document.getElementById('ai-role').value,
+          integration: {
+            domainPlacement: document.getElementById('domain-placement').value,
+            nfCooperation: document.getElementById('nf-cooperation').value,
+            dataProducers: document.getElementById('data-producers').value,
+            dataConsumers: document.getElementById('data-consumers').value
+          }
+        },
+        modelDetails: {
+          name: document.getElementById('model-name').value,
+          overview: document.getElementById('model-overview').value,
+          architectureDetails: document.getElementById('architecture-details').value,
+          specialFunctions: document.getElementById('special-functions').value,
+          baseModel: document.getElementById('base-model').value
+        },
+        dataFormat: {
+          input: document.getElementById('input-format').value,
+          output: document.getElementById('output-format').value,
+          dataSource: document.getElementById('data-source').value,
+          preprocessing: document.getElementById('preprocessing').value
+        },
+        validation: {
+          methods: document.getElementById('validation-methods').value
+        },
+        environment: {
+          configuration: document.getElementById('environment-config').value
+        },
+        additionalInfo: {
+          sources: document.getElementById('sources').value
+        }
+      };
+      return formData;
+    }
+
+    // Download function
+    function downloadFile(content, filename, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Export as JSON
+    document.getElementById('exportJson').addEventListener('click', () => {
+      const data = collectFormData();
+      const jsonString = JSON.stringify(data, null, 2);
+      const filename = `model-card-${data.modelDetails.name || 'unnamed'}-${new Date().toISOString().split('T')[0]}.json`;
+      downloadFile(jsonString, filename, 'application/json');
+    });
+
+    // Export as YAML
+    document.getElementById('exportYaml').addEventListener('click', () => {
+      const data = collectFormData();
+      let yamlString = `# Network-Oriented Model Card
+# Generated on: ${data.metadata.created}
+# Framework Version: ${data.metadata.version}
+
+metadata:
+  created: "${data.metadata.created}"
+  version: "${data.metadata.version}"
+  framework: "${data.metadata.framework}"
+
+useCases:
+  networkFunctionDescription: |
+    ${data.useCases.networkFunctionDescription || ''}
+  aimlRole: |
+    ${data.useCases.aimlRole || ''}
+  integration:
+    domainPlacement: "${data.useCases.integration.domainPlacement || ''}"
+    nfCooperation: |
+      ${data.useCases.integration.nfCooperation || ''}
+    dataProducers: |
+      ${data.useCases.integration.dataProducers || ''}
+    dataConsumers: |
+      ${data.useCases.integration.dataConsumers || ''}
+
+modelDetails:
+  name: "${data.modelDetails.name || ''}"
+  overview: |
+    ${data.modelDetails.overview || ''}
+  architectureDetails: |
+    ${data.modelDetails.architectureDetails || ''}
+  specialFunctions: |
+    ${data.modelDetails.specialFunctions || ''}
+  baseModel: "${data.modelDetails.baseModel || ''}"
+
+dataFormat:
+  input: |
+    ${data.dataFormat.input || ''}
+  output: |
+    ${data.dataFormat.output || ''}
+  dataSource: "${data.dataFormat.dataSource || ''}"
+  preprocessing: |
+    ${data.dataFormat.preprocessing || ''}
+
+validation:
+  methods: |
+    ${data.validation.methods || ''}
+
+environment:
+  configuration: |
+    ${data.environment.configuration || ''}
+
+additionalInfo:
+  sources: |
+    ${data.additionalInfo.sources || ''}`;
+      
+      const filename = `model-card-${data.modelDetails.name || 'unnamed'}-${new Date().toISOString().split('T')[0]}.yaml`;
+      downloadFile(yamlString, filename, 'text/yaml');
+    });
+
+    // Export as Markdown
+    document.getElementById('exportMarkdown').addEventListener('click', () => {
+      const data = collectFormData();
+      const mdString = `# Network-Oriented Model Card: ${data.modelDetails.name || 'Unnamed Model'}
+
+*Generated on: ${new Date(data.metadata.created).toLocaleDateString()}*  
+*Framework: ${data.metadata.framework}*
+
+## Use Cases
+
+### Network Function Description
+${data.useCases.networkFunctionDescription || 'Not specified'}
+
+### Role of AI/ML Model
+${data.useCases.aimlRole || 'Not specified'}
+
+### 5G Infrastructure Integration
+- **Domain Placement:** ${data.useCases.integration.domainPlacement || 'Not specified'}
+- **NF Cooperation:** ${data.useCases.integration.nfCooperation || 'Not specified'}
+- **Data Producers:** ${data.useCases.integration.dataProducers || 'Not specified'}
+- **Data Consumers:** ${data.useCases.integration.dataConsumers || 'Not specified'}
+
+## AI/ML Model Details
+
+### Model Overview
+${data.modelDetails.overview || 'Not specified'}
+
+### Architecture Details
+${data.modelDetails.architectureDetails || 'Not specified'}
+
+### Special Functions
+${data.modelDetails.specialFunctions || 'Not specified'}
+
+### Base Model
+${data.modelDetails.baseModel || 'Not specified'}
+
+## Data Format
+
+### Input
+${data.dataFormat.input || 'Not specified'}
+
+### Output
+${data.dataFormat.output || 'Not specified'}
+
+### Data Source
+${data.dataFormat.dataSource || 'Not specified'}
+
+### Preprocessing
+${data.dataFormat.preprocessing || 'Not specified'}
+
+## Validation
+
+### Methods
+${data.validation.methods || 'Not specified'}
+
+## Environment
+
+### Configuration
+${data.environment.configuration || 'Not specified'}
+
+## Additional Information
+
+### Sources & Publications
+${data.additionalInfo.sources || 'Not specified'}
+
+---
+*This Model Card was generated using the Network-Oriented Model Cards framework for AI/ML systems in 5G/6G mobile networks.*`;
+      
+      const filename = `model-card-${data.modelDetails.name || 'unnamed'}-${new Date().toISOString().split('T')[0]}.md`;
+      downloadFile(mdString, filename, 'text/markdown');
+    });
+
+    // Export as PDF (using browser's print to PDF)
+    document.getElementById('exportPdf').addEventListener('click', () => {
+      const data = collectFormData();
+      
+      // Create a new window with formatted content for PDF
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Model Card: ${data.modelDetails.name || 'Unnamed Model'}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+            h1 { color: #1e40af; border-bottom: 3px solid #3b82f6; padding-bottom: 10px; }
+            h2 { color: #1e40af; margin-top: 30px; }
+            h3 { color: #374151; margin-top: 20px; }
+            .metadata { background: #f3f4f6; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
+            .section { margin-bottom: 25px; }
+            .field { margin-bottom: 15px; }
+            .field-label { font-weight: bold; color: #374151; }
+            .field-content { margin-top: 5px; white-space: pre-wrap; }
+            @media print { body { margin: 20px; } }
+          </style>
+        </head>
+        <body>
+          <h1>Network-Oriented Model Card: ${data.modelDetails.name || 'Unnamed Model'}</h1>
+          
+          <div class="metadata">
+            <strong>Generated:</strong> ${new Date(data.metadata.created).toLocaleDateString()}<br>
+            <strong>Framework:</strong> ${data.metadata.framework}<br>
+            <strong>Version:</strong> ${data.metadata.version}
+          </div>
+
+          <div class="section">
+            <h2>Use Cases</h2>
+            <div class="field">
+              <div class="field-label">Network Function Description:</div>
+              <div class="field-content">${data.useCases.networkFunctionDescription || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Role of AI/ML Model:</div>
+              <div class="field-content">${data.useCases.aimlRole || 'Not specified'}</div>
+            </div>
+            <h3>5G Infrastructure Integration</h3>
+            <div class="field">
+              <div class="field-label">Domain Placement:</div>
+              <div class="field-content">${data.useCases.integration.domainPlacement || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">NF Cooperation:</div>
+              <div class="field-content">${data.useCases.integration.nfCooperation || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Data Producers:</div>
+              <div class="field-content">${data.useCases.integration.dataProducers || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Data Consumers:</div>
+              <div class="field-content">${data.useCases.integration.dataConsumers || 'Not specified'}</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>AI/ML Model Details</h2>
+            <div class="field">
+              <div class="field-label">Model Overview:</div>
+              <div class="field-content">${data.modelDetails.overview || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Architecture Details:</div>
+              <div class="field-content">${data.modelDetails.architectureDetails || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Special Functions:</div>
+              <div class="field-content">${data.modelDetails.specialFunctions || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Base Model:</div>
+              <div class="field-content">${data.modelDetails.baseModel || 'Not specified'}</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Data Format</h2>
+            <div class="field">
+              <div class="field-label">Input:</div>
+              <div class="field-content">${data.dataFormat.input || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Output:</div>
+              <div class="field-content">${data.dataFormat.output || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Data Source:</div>
+              <div class="field-content">${data.dataFormat.dataSource || 'Not specified'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Preprocessing:</div>
+              <div class="field-content">${data.dataFormat.preprocessing || 'Not specified'}</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Validation</h2>
+            <div class="field">
+              <div class="field-label">Methods:</div>
+              <div class="field-content">${data.validation.methods || 'Not specified'}</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Environment</h2>
+            <div class="field">
+              <div class="field-label">Configuration:</div>
+              <div class="field-content">${data.environment.configuration || 'Not specified'}</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Additional Information</h2>
+            <div class="field">
+              <div class="field-label">Sources & Publications:</div>
+              <div class="field-content">${data.additionalInfo.sources || 'Not specified'}</div>
+            </div>
+          </div>
+        </body>
+        </html>
+      `);
+      
+      printWindow.document.close();
+      
+      // Wait for content to load then trigger print
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+    });
+  </script>
 </body>
 </html>
